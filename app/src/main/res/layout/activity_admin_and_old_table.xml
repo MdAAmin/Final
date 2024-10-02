@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
-    android:paddingTop="40dp"
+    android:paddingTop="24dp"
     android:paddingBottom="8dp"
-    android:background="#B59C27B0"
+    android:background="#bb8fce"
     tools:context=".AdminAndOldTable">
 
     <TextView
@@ -32,11 +32,13 @@
         android:id="@+id/AD_ed"
         android:layout_width="match_parent"
         android:layout_height="69dp"
+        android:drawableTint="#12a4d9"
         android:layout_marginTop="40dp"
         android:background="@drawable/edit_text_box"
         android:drawableStart="@drawable/name"
         android:drawablePadding="8dp"
         android:hint="Enter Table Name"
+        android:fontFamily="serif"
         android:inputType="textPersonName"
         android:minHeight="40dp"
         android:paddingTop="8dp"
@@ -52,9 +54,11 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/edit_text_box"
         android:drawableStart="@drawable/number"
+        android:fontFamily="serif"
         android:drawablePadding="8dp"
+        android:drawableTint="#12a4d9"
         android:hint="Enter Table Number"
-        android:inputType="textPassword"
+        android:inputType="numberDecimal"
         android:minHeight="40dp"
         android:paddingTop="8dp"
         android:textColorHint="#FFFF5722"
@@ -67,7 +71,11 @@
         android:layout_width="match_parent"
         android:layout_height="69dp"
         android:layout_marginTop="24dp"
+        android:drawableStart="@drawable/capacity"
+        android:fontFamily="serif"
+        android:drawablePadding="8dp"
         android:background="@drawable/edit_text_box"
+        android:drawableTint="#12a4d9"
         android:hint="Enter Table Capacity"
         android:inputType="number"
         android:minHeight="40dp"
@@ -75,15 +83,43 @@
         android:textColorHint="#FFFF5722"
         android:textSize="16sp"/>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Enter Admin Password"
+        android:textColorHint="#FFFF5722"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:endIconMode="password_toggle"
+        app:passwordToggleEnabled="true"
+        app:endIconTint="@color/white">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_password"
+            android:layout_width="match_parent"
+            android:layout_height="69dp"
+            android:fontFamily="serif"
+            android:background="@drawable/edit_text_box"
+            android:drawableStart="@drawable/password"
+            android:drawablePadding="8dp"
+            android:drawableTint="#12a4d9"
+            android:inputType="textPassword"
+            android:minHeight="40dp"
+            android:paddingTop="8dp"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/BTN_Add_Table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FFC107"
+        android:backgroundTint="#2c3e50 "
         android:minHeight="48dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:text="Add Table"
+        android:fontFamily="monospace"
+
         android:textColor="#E91E63"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -97,7 +133,7 @@
         android:textSize="16sp"
         android:textColor="#FFFFFF"
         android:padding="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:textStyle="bold" />
 
@@ -106,9 +142,11 @@
         android:id="@+id/BTN_ADMIN"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FFC107"
+        android:backgroundTint="#2c3e50 "
         android:layout_marginStart="8dp"
         android:text="Admin"
+        android:fontFamily="monospace"
+
         android:textColor="#C2185B"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -117,11 +155,13 @@
 
     <Button
         android:id="@+id/BTN_Back"
-        android:layout_width="match_parent"
-        android:layout_marginTop="28dp"
-        android:layout_height="76dp"
-        android:backgroundTint="#FFC107"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="right"
+        android:backgroundTint="#f1c40f"
         android:text="Back"
+        android:fontFamily="monospace"
         android:textColor="#C2185B"
         android:textSize="18sp"
         android:textStyle="bold"

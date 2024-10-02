@@ -14,18 +14,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_ADMIN = "admin";
     private static final String TABLE_TABLES = "tables";
 
+    private static final String COLUMN_ADMIN_ID = "admin_id";
     private static final String COLUMN_ADMIN_NAME = "adminname";
     private static final String COLUMN_PASSWORD = "password";
+
+    private static final String COLUMN_TABLE_ID = "table_id";
     private static final String COLUMN_TABLE_NAME = "table_name";
     private static final String COLUMN_TABLE_NUMBER = "table_number";
     private static final String COLUMN_TABLE_CAPACITY = "table_capacity";
 
     private static final String CREATE_ADMIN_TABLE = "CREATE TABLE " + TABLE_ADMIN + " ("
-            + COLUMN_ADMIN_NAME + " TEXT PRIMARY KEY, "
+            + COLUMN_ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_ADMIN_NAME + " TEXT NOT NULL, "
             + COLUMN_PASSWORD + " TEXT NOT NULL);";
 
     private static final String CREATE_TABLES_TABLE = "CREATE TABLE " + TABLE_TABLES + " ("
-            + COLUMN_TABLE_NAME + " TEXT PRIMARY KEY, "
+            + COLUMN_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_TABLE_NAME + " TEXT NOT NULL, "
             + COLUMN_TABLE_NUMBER + " TEXT NOT NULL, "
             + COLUMN_TABLE_CAPACITY + " INTEGER NOT NULL);";
 
@@ -37,13 +42,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_ADMIN_TABLE);
         db.execSQL(CREATE_TABLES_TABLE);
+
+        ContentValues defaultAdmin = new ContentValues();
+        defaultAdmin.put(COLUMN_ADMIN_NAME, "Admin");
+        defaultAdmin.put(COLUMN_PASSWORD, "11");
+        db.insert(TABLE_ADMIN, null, defaultAdmin);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMIN);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TABLES);
-        onCreate(db);
+        if (oldVersion < 1) {
+
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMIN);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TABLES);
+            onCreate(db);
+        }
     }
 
     public boolean checkAdmin(String adminname, String password) {
@@ -55,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
+    // Method to add a new admin
     public void addAdmin(String adminname, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -63,12 +77,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ADMIN, null, values);
     }
 
-    public void addTable(String tableName, String tableNumber, int tableCapacity) {
+    // Method to add a new table
+    public boolean addTable(String tableName, String tableNumber, int tableCapacity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TABLE_NAME, tableName);
         values.put(COLUMN_TABLE_NUMBER, tableNumber);
         values.put(COLUMN_TABLE_CAPACITY, tableCapacity);
-        db.insert(TABLE_TABLES, null, values);
+
+        long result = db.insert(TABLE_TABLES, null, values);
+        return result != -1;
+    }
+
+    public Cursor getAllTables() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_TABLES, null, null, null, null, null, null);
     }
 }

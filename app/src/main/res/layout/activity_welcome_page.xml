@@ -7,11 +7,7 @@
     android:background="@drawable/img_3"
     tools:context=".WelcomePage">
 
-    <View
-        android:id="@+id/overlayView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80000000" />
+
 
     <TextView
         android:id="@+id/welcomeText"
@@ -19,12 +15,12 @@
         android:layout_height="wrap_content"
         android:text="Welcome to MenuMade"
         android:textSize="28sp"
-        android:textColor="@android:color/white"
+        android:textColor="#E91E63"
         android:fontFamily="cursive"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/subtext"
@@ -32,11 +28,11 @@
         android:layout_height="wrap_content"
         android:text="Discover Your Taste, Enjoy Every Moment"
         android:textSize="16sp"
-        android:textColor="@android:color/white"
+        android:textColor="#F80909"
         android:fontFamily="serif"
         android:layout_below="@id/welcomeText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="18dp" />
 
     <TextView
         android:id="@+id/signInPrompt"
@@ -44,7 +40,7 @@
         android:layout_height="wrap_content"
         android:text="Ready to Explore?"
         android:textSize="16sp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/black"
         android:fontFamily="sans-serif"
         android:layout_below="@id/subtext"
         android:layout_centerHorizontal="true"
@@ -80,7 +76,7 @@
         android:layout_height="wrap_content"
         android:text="Don't have an registred Table? or you are admin!"
         android:textSize="14sp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/black"
         android:fontFamily="sans-serif"
         android:layout_below="@id/getStartedButton"
         android:layout_centerHorizontal="true"
@@ -92,7 +88,7 @@
         android:layout_height="wrap_content"
         android:text="Handcrafted with Care by MenuMade Team"
         android:textSize="14sp"
-        android:textColor="#FFFFFF"
+        android:textColor="#FF5722"
         android:fontFamily="cursive"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

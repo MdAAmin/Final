@@ -1,24 +1,37 @@
 package com.example.menumade;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class CustomerConnectionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_customer_connection);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        Button btnProductDisplay = findViewById(R.id.BTN_Product_Display);
+        Button btnPersonalizedRecommendations = findViewById(R.id.BTN_Personalized_Recommendations);
+        Button btnPayment = findViewById(R.id.Payment);
+
+
+        btnProductDisplay.setOnClickListener(v -> {
+            Toast.makeText(CustomerConnectionActivity.this, "Navigating to Product Display Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(CustomerConnectionActivity.this, ProductsDisplay.class));
+        });
+
+        btnPersonalizedRecommendations.setOnClickListener(v -> {
+            Toast.makeText(CustomerConnectionActivity.this, "Navigating to Personalized Recommendations Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(CustomerConnectionActivity.this, PersonalizedRecommendationsActivity.class));
+        });
+
+        btnPayment.setOnClickListener(v -> {
+            Toast.makeText(CustomerConnectionActivity.this, "Navigating to Payment Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(CustomerConnectionActivity.this, Payment.class));
         });
     }
 }

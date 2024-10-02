@@ -9,6 +9,7 @@
         android:id="@+id/textView"
         android:text="Admin Login"
         android:textSize="24sp"
+        android:background="@drawable/shape_back"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp" />
@@ -16,7 +17,10 @@
     <EditText
         android:id="@+id/ed_admin_name"
         android:layout_width="match_parent"
+        android:drawableStart="@drawable/adname"
+        android:drawablePadding="8dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/edittext_background"
         android:layout_below="@id/textView"
         android:hint="Admin Name"
         android:inputType="text"
@@ -28,7 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ed_admin_name"
         android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/password"
+        android:drawablePadding="8dp"
         android:hint="Password"
+        android:background="@drawable/edittext_background"
         android:inputType="textPassword"
         android:minHeight="48dp" />
 

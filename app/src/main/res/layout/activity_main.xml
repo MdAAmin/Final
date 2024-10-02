@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_2"
+    android:alpha="0.8"
     android:padding="16dp">
 
     <ProgressBar
@@ -22,7 +24,8 @@
         android:layout_marginTop="16dp"
         android:paddingStart="24dp"
         android:textSize="16sp"
-
+        android:textColor="#2196F3"
+        android:fontFamily="sans-serif"
         android:text="@string/loading"
         tools:ignore="RtlSymmetry" />
 
