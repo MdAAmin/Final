@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLES_TABLE);
 
         ContentValues defaultAdmin = new ContentValues();
-        defaultAdmin.put(COLUMN_ADMIN_NAME, "Admin");
+        defaultAdmin.put(COLUMN_ADMIN_NAME, "Amin");
         defaultAdmin.put(COLUMN_PASSWORD, "11");
         db.insert(TABLE_ADMIN, null, defaultAdmin);
     }

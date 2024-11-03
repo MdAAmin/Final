@@ -26,6 +26,22 @@ public class AdminLogin extends AppCompatActivity {
             String adminName = adminNameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
+            // Define regex patterns
+            String adminNamePattern = "^[a-zA-Z0-9]{3,20}$";  // Alphanumeric, 3-20 characters
+            String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{2,}$";  // At least 2 chars with uppercase, lowercase, and digit
+
+            // Check if admin name and password match the patterns
+            if (!adminName.matches(adminNamePattern)) {
+                Toast.makeText(AdminLogin.this, "Invalid Admin Name. Use 3-20 alphanumeric characters.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!password.matches(passwordPattern)) {
+                Toast.makeText(AdminLogin.this, "Password must be at least 8 characters, with uppercase, lowercase, and a digit.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // If validation passes, check credentials with database
             if (databaseHelper.checkAdmin(adminName, password)) {
                 Intent intent = new Intent(AdminLogin.this, AdminAndOldTable.class);
                 startActivity(intent);
