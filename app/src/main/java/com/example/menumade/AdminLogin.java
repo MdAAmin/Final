@@ -43,7 +43,7 @@ public class AdminLogin extends AppCompatActivity {
 
             // If validation passes, check credentials with database
             if (databaseHelper.checkAdmin(adminName, password)) {
-                Intent intent = new Intent(AdminLogin.this, AdminAndOldTable.class);
+                Intent intent = new Intent(AdminLogin.this, AdminHome.class);
                 startActivity(intent);
                 finish();
             } else {

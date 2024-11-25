@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".InsertTableActivity">
+    tools:context=".InsertTableItemActivity"
+    android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Insert Table"
+        android:text="Insert Product"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -19,11 +19,12 @@
         tools:ignore="HardcodedText" />
 
     <EditText
-        android:id="@+id/et_table_name"
+        android:id="@+id/et_product_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Table Name"
+        android:autofillHints=""
+        android:hint="Product Name"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColor="@android:color/black"
@@ -31,35 +32,37 @@
         tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
     <EditText
-        android:id="@+id/et_table_number"
+        android:id="@+id/et_product_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Table Number"
-        android:inputType="number"
+        android:autofillHints=""
+        android:hint="Product Price"
+        android:inputType="numberDecimal"
         android:minHeight="48dp"
         android:textColor="@android:color/black"
         android:textColorHint="#546E7A"
         tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
     <EditText
-        android:id="@+id/et_table_capacity"
+        android:id="@+id/et_product_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Table Capacity"
+        android:hint="Product Quantity"
         android:inputType="number"
         android:minHeight="48dp"
         android:textColor="@android:color/black"
         android:textColorHint="#546E7A"
-        tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+        tools:ignore="HardcodedText,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
     <ImageView
         android:id="@+id/iv_selected_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="374dp"
+        android:layout_height="194dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="Selected Table Image"
+        android:contentDescription="Image of the product"
         android:scaleType="fitCenter"
         android:src="@drawable/insert" />
 
@@ -73,10 +76,10 @@
         tools:ignore="VisualLintButtonSize" />
 
     <Button
-        android:id="@+id/btn_insert_table"
+        android:id="@+id/btn_insert_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Insert Table"
+        android:text="Insert Product"
         android:textColor="#C5E1A5"
         tools:ignore="DuplicateSpeakableTextCheck,VisualLintButtonSize" />
 
@@ -89,4 +92,5 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         tools:ignore="VisualLintButtonSize" />
+
 </LinearLayout>

@@ -8,31 +8,38 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "MenuMade.db";
-    private static final int DATABASE_VERSION = 1;
+    // Database Info
+    public static final String DATABASE_NAME = "MenuMade.db";
+    public static final int DATABASE_VERSION = 2;
 
-    private static final String TABLE_ADMIN = "admin";
-    private static final String TABLE_TABLES = "tables";
+    // Table Names
+    public static final String TABLE_ADMIN = "admin";
+    public static final String TABLE_PRODUCTS = "products";
 
-    private static final String COLUMN_ADMIN_ID = "admin_id";
-    private static final String COLUMN_ADMIN_NAME = "adminname";
-    private static final String COLUMN_PASSWORD = "password";
+    // Admin Table Columns
+    public static final String COLUMN_ADMIN_ID = "admin_id";
+    public static final String COLUMN_ADMIN_NAME = "admin_name";
+    public static final String COLUMN_PASSWORD = "password";
 
-    private static final String COLUMN_TABLE_ID = "table_id";
-    private static final String COLUMN_TABLE_NAME = "table_name";
-    private static final String COLUMN_TABLE_NUMBER = "table_number";
-    private static final String COLUMN_TABLE_CAPACITY = "table_capacity";
+    // Products Table Columns
+    public static final String COLUMN_PRODUCT_ID = "product_id";
+    public static final String COLUMN_PRODUCT_NAME = "product_name";
+    public static final String COLUMN_PRODUCT_PRICE = "product_price";
+    public static final String COLUMN_PRODUCT_QUANTITY = "product_quantity"; // Added quantity
+    public static final String COLUMN_PRODUCT_IMAGE = "product_image";  // Optional, to store images as blobs
 
-    private static final String CREATE_ADMIN_TABLE = "CREATE TABLE " + TABLE_ADMIN + " ("
-            + COLUMN_ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_ADMIN_NAME + " TEXT NOT NULL, "
-            + COLUMN_PASSWORD + " TEXT NOT NULL);";
+    // SQL Queries
+    private static final String CREATE_ADMIN_TABLE = "CREATE TABLE " + TABLE_ADMIN + " (" +
+            COLUMN_ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_ADMIN_NAME + " TEXT NOT NULL UNIQUE, " +
+            COLUMN_PASSWORD + " TEXT NOT NULL);";
 
-    private static final String CREATE_TABLES_TABLE = "CREATE TABLE " + TABLE_TABLES + " ("
-            + COLUMN_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_TABLE_NAME + " TEXT NOT NULL, "
-            + COLUMN_TABLE_NUMBER + " TEXT NOT NULL, "
-            + COLUMN_TABLE_CAPACITY + " INTEGER NOT NULL);";
+    private static final String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + TABLE_PRODUCTS + " (" +
+            COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_PRODUCT_NAME + " TEXT NOT NULL UNIQUE, " +
+            COLUMN_PRODUCT_PRICE + " REAL NOT NULL, " +
+            COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL, " + // Added quantity
+            COLUMN_PRODUCT_IMAGE + " BLOB);";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,56 +48,110 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_ADMIN_TABLE);
-        db.execSQL(CREATE_TABLES_TABLE);
+        db.execSQL(CREATE_PRODUCTS_TABLE);
 
+        // Insert default admin
         ContentValues defaultAdmin = new ContentValues();
-        defaultAdmin.put(COLUMN_ADMIN_NAME, "Amin");
-        defaultAdmin.put(COLUMN_PASSWORD, "11");
+        defaultAdmin.put(COLUMN_ADMIN_NAME, "Admin");
+        defaultAdmin.put(COLUMN_PASSWORD, "12345Aa@");
         db.insert(TABLE_ADMIN, null, defaultAdmin);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 1) {
-
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMIN);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TABLES);
-            onCreate(db);
+        if (oldVersion < 2) {
+            // Handle migration here if needed (e.g., renaming old tables or adding new columns)
+            db.execSQL("ALTER TABLE products ADD COLUMN " + COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL DEFAULT 0;");
         }
     }
 
-    public boolean checkAdmin(String adminname, String password) {
+    // Check Admin Credentials
+    public boolean checkAdmin(String adminName, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_ADMIN, null, COLUMN_ADMIN_NAME + "=? AND " + COLUMN_PASSWORD + "=?",
-                new String[]{adminname, password}, null, null, null);
-        boolean exists = cursor.getCount() > 0;
-        cursor.close();
-        return exists;
+        Cursor cursor = db.query(TABLE_ADMIN,
+                null,
+                COLUMN_ADMIN_NAME + "=? AND " + COLUMN_PASSWORD + "=?",
+                new String[]{adminName, password}, null, null, null);
+
+        boolean result = cursor != null && cursor.getCount() > 0;
+        if (cursor != null) {
+            cursor.close();
+        }
+        return result;
     }
 
-    // Method to add a new admin
-    public void addAdmin(String adminname, String password) {
+    // Insert a new product
+    public boolean insertProduct(String productName, double productPrice, int productQuantity, byte[] productImage) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_ADMIN_NAME, adminname);
-        values.put(COLUMN_PASSWORD, password);
-        db.insert(TABLE_ADMIN, null, values);
+        values.put(COLUMN_PRODUCT_NAME, productName);
+        values.put(COLUMN_PRODUCT_PRICE, productPrice);
+        values.put(COLUMN_PRODUCT_QUANTITY, productQuantity);  // Quantity added
+        values.put(COLUMN_PRODUCT_IMAGE, productImage);
+
+        long result = db.insert(TABLE_PRODUCTS, null, values);
+        return result != -1;  // Return true if insertion succeeded
     }
 
-    // Method to add a new table
-    public boolean addTable(String tableName, String tableNumber, int tableCapacity) {
+    // Update an existing product
+    public boolean updateProduct(int productId, String productName, double productPrice, int productQuantity, byte[] productImage) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_TABLE_NAME, tableName);
-        values.put(COLUMN_TABLE_NUMBER, tableNumber);
-        values.put(COLUMN_TABLE_CAPACITY, tableCapacity);
+        values.put(COLUMN_PRODUCT_NAME, productName);
+        values.put(COLUMN_PRODUCT_PRICE, productPrice);
+        values.put(COLUMN_PRODUCT_QUANTITY, productQuantity);  // Quantity added
+        values.put(COLUMN_PRODUCT_IMAGE, productImage);
 
-        long result = db.insert(TABLE_TABLES, null, values);
-        return result != -1;
+        int rowsAffected = db.update(TABLE_PRODUCTS, values, COLUMN_PRODUCT_ID + "=?", new String[]{String.valueOf(productId)});
+        return rowsAffected > 0;  // Return true if update succeeded
     }
 
-    public Cursor getAllTables() {
+    // Delete a product by name
+    public boolean deleteProduct(String productName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsAffected = db.delete(TABLE_PRODUCTS, COLUMN_PRODUCT_NAME + "=?", new String[]{productName});
+        return rowsAffected > 0;  // Return true if deletion succeeded
+    }
+
+    // Get all products
+    public Cursor getAllProducts() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_TABLES, null, null, null, null, null, null);
+        return db.query(TABLE_PRODUCTS,
+                null,  // Get all columns
+                null,  // No WHERE clause
+                null,  // No selection arguments
+                null,  // No GROUP BY
+                null,  // No HAVING
+                null); // No ORDER BY
     }
+
+    // Get a specific product by name
+    public Cursor getProductByName(String productName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_PRODUCTS,
+                null,
+                COLUMN_PRODUCT_NAME + "=?",
+                new String[]{productName}, null, null, null);
+    }
+
+    // Get product by ID
+    public Cursor getProductById(int productId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_PRODUCTS,
+                null,
+                COLUMN_PRODUCT_ID + "=?",
+                new String[]{String.valueOf(productId)}, null, null, null);
+    }
+
+    public void addTable(String tableName, int tableNumber, int tableCapacity) {
+    }
+
+    public void insertOrder(String productName, double productPrice, int productQuantity) {
+    }
+
+    public Cursor getAllOrders() {
+        return null;
+    }
+
 }
+

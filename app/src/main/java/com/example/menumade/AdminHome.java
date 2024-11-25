@@ -24,7 +24,7 @@ public class AdminHome extends AppCompatActivity {
         btnInsertProduct.setOnClickListener(new View.OnClickListener() { // clickable
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(AdminHome.this, InsertTableActivity.class);
+                Intent intent1 = new Intent(AdminHome.this, InsertTableItemActivity.class);
                 startActivity(intent1); // start the new activity
             }
         });
@@ -40,7 +40,7 @@ public class AdminHome extends AppCompatActivity {
         btnUpdateProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent3 = new Intent(AdminHome.this, UpdateTableActivity.class);
+                Intent intent3 = new Intent(AdminHome.this, UpdateTableItemActivity.class);
                 startActivity(intent3);
             }
         });
@@ -48,7 +48,7 @@ public class AdminHome extends AppCompatActivity {
         btnDeleteProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent4 = new Intent(AdminHome.this, DeleteTableActivity.class);
+                Intent intent4 = new Intent(AdminHome.this, DeleteTableItemActivity.class);
                 startActivity(intent4);
             }
         });

@@ -13,19 +13,25 @@
         android:theme="@style/Theme.MenuMade"
         tools:targetApi="31">
         <activity
-            android:name=".DeleteTableActivity"
+            android:name=".ProductListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DeleteTableItemActivity"
             android:exported="false" />
         <activity
             android:name=".AdminOrderDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateTableActivity"
+            android:name=".UpdateTableItemActivity"
             android:exported="false" />
         <activity
             android:name=".ViewTableActivity"
             android:exported="false" />
         <activity
-            android:name=".InsertTableActivity"
+            android:name=".InsertTableItemActivity"
             android:exported="false" />
         <activity
             android:name=".Payment"

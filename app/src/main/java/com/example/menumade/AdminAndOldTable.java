@@ -21,70 +21,72 @@ public class AdminAndOldTable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_and_old_table);
 
+        // Inflate custom toast layout
         LayoutInflater inflater = getLayoutInflater();
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) View layout = inflater.inflate(R.layout.toaster, findViewById(R.id.go));
 
+        // Custom toast setup
         Toast customToast = new Toast(getApplicationContext());
         customToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         customToast.setDuration(Toast.LENGTH_SHORT);
         customToast.setView(layout);
 
+        // Initialize DatabaseHelper
         databaseHelper = new DatabaseHelper(this);
 
+        // Bind views
         tableNameEditText = findViewById(R.id.AD_ed);
         tableNumberEditText = findViewById(R.id.pass_ed);
         tableCapacityEditText = findViewById(R.id.table_capacity);
         adminPasswordEditText = findViewById(R.id.ed_password);  // Admin password field
 
+        // Add Table button logic
         Button addTableButton = findViewById(R.id.BTN_Add_Table);
         addTableButton.setOnClickListener(v -> {
             String tableName = tableNameEditText.getText().toString();
-            String tableNumber = tableNumberEditText.getText().toString();
+            String tableNumberStr = tableNumberEditText.getText().toString();
             String tableCapacityStr = tableCapacityEditText.getText().toString();
             String adminPassword = adminPasswordEditText.getText().toString();
 
-            if (!tableName.isEmpty() && !tableNumber.isEmpty() && !tableCapacityStr.isEmpty() && !adminPassword.isEmpty()) {
+            if (!tableName.isEmpty() && !tableNumberStr.isEmpty() && !tableCapacityStr.isEmpty() && !adminPassword.isEmpty()) {
                 if (databaseHelper.checkAdmin("Admin", adminPassword)) {
-                    int tableCapacity = Integer.parseInt(tableCapacityStr);
-                    databaseHelper.addTable(tableName, tableNumber, tableCapacity);
-                    Toast.makeText(AdminAndOldTable.this, "Table Added Successfully", Toast.LENGTH_SHORT).show();
+                    try {
+                        int tableNumber = Integer.parseInt(tableNumberStr); // Convert tableNumber to int
+                        int tableCapacity = Integer.parseInt(tableCapacityStr); // Convert tableCapacity to int
 
-                    tableNameEditText.setText("");
-                    tableNumberEditText.setText("");
-                    tableCapacityEditText.setText("");
-                    adminPasswordEditText.setText("");
+                        // Add table to database
+                        databaseHelper.addTable(tableName, tableNumber, tableCapacity);
+                        Toast.makeText(AdminAndOldTable.this, "Table Added Successfully", Toast.LENGTH_SHORT).show();
+
+                        // Clear input fields
+                        tableNameEditText.setText("");
+                        tableNumberEditText.setText("");
+                        tableCapacityEditText.setText("");
+                        adminPasswordEditText.setText("");
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(AdminAndOldTable.this, "Table Number and Capacity must be numeric", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(AdminAndOldTable.this, "Invalid Admin Password", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                if (tableName.isEmpty()) {
-                    tableNameEditText.requestFocus();
-                    Toast.makeText(AdminAndOldTable.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                } else if (tableNumber.isEmpty()) {
-                    tableNumberEditText.requestFocus();
-                    Toast.makeText(AdminAndOldTable.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                } else if (tableCapacityStr.isEmpty()) {
-                    tableCapacityEditText.requestFocus();
-                    Toast.makeText(AdminAndOldTable.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                } else if (adminPassword.isEmpty()) {
-                    adminPasswordEditText.requestFocus();
-                    Toast.makeText(AdminAndOldTable.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(AdminAndOldTable.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             }
         });
 
-
+        // Admin button logic
         Button adminButton = findViewById(R.id.BTN_ADMIN);
         adminButton.setOnClickListener(v -> {
             customToast.show();
-            Intent intent1 = new Intent(AdminAndOldTable.this, AdminLogin.class);
-            startActivity(intent1);
+            Intent intent = new Intent(AdminAndOldTable.this, AdminLogin.class);
+            startActivity(intent);
         });
 
+        // Back button logic
         Button backButton = findViewById(R.id.BTN_Back);
         backButton.setOnClickListener(v -> {
-            Intent intent3 = new Intent(AdminAndOldTable.this, MainActivity.class);
-            startActivity(intent3);
+            Intent intent = new Intent(AdminAndOldTable.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 }
