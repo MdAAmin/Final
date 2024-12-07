@@ -116,14 +116,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Get all products
     public Cursor getAllProducts() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_PRODUCTS,
-                null,  // Get all columns
-                null,  // No WHERE clause
-                null,  // No selection arguments
-                null,  // No GROUP BY
-                null,  // No HAVING
-                null); // No ORDER BY
+        return db.rawQuery("SELECT product_id AS _id, product_name, product_price, product_quantity, product_image FROM " + TABLE_PRODUCTS, null);
     }
+
 
     // Get a specific product by name
     public Cursor getProductByName(String productName) {
@@ -149,9 +144,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void insertOrder(String productName, double productPrice, int productQuantity) {
     }
 
+    // Get all products as orders
     public Cursor getAllOrders() {
-        return null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT product_id AS _id, product_name, product_price, product_quantity FROM " + TABLE_PRODUCTS + " WHERE product_quantity > 0", null);
     }
+
 
 }
 

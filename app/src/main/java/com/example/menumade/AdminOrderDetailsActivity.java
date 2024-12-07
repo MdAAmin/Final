@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -47,7 +46,7 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
         // Check if the cursor is valid and has data
         if (cursor != null && cursor.getCount() > 0) {
             // Create and set the adapter to display orders in RecyclerView
-            OrderAdapter adapter = new OrderAdapter(this, cursor);
+            ViewOrderAdapter adapter = new ViewOrderAdapter(this, cursor);
             recyclerViewOrder.setAdapter(adapter);
         } else {
             // Show a message if no orders are found

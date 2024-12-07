@@ -28,16 +28,25 @@ public class OrderActivity extends AppCompatActivity {
         Button placeOrderButton = findViewById(R.id.placeOrderButton);
         Button btnBack = findViewById(R.id.btn_back8);
 
-        btnBack.setOnClickListener(v -> {
-            Intent intent = new Intent(OrderActivity.this, ProductListActivity.class);
-            startActivity(intent);
-        });
-
         // Initialize DatabaseHelper
         databaseHelper = new DatabaseHelper(this);
 
-        // Handle order placement
+        // Get the product details passed from ProductsDisplay activity
+        Intent intent = getIntent();
+        String productName = intent.getStringExtra("productName");
+        double productPrice = intent.getDoubleExtra("productPrice", 0);
+        int productQuantity = intent.getIntExtra("productQuantity", 0);
+
+        productNameEditText.setText(productName);
+        productPriceEditText.setText(String.valueOf(productPrice));
+        productQuantityEditText.setText(String.valueOf(productQuantity));
+
         placeOrderButton.setOnClickListener(v -> placeOrder());
+
+        btnBack.setOnClickListener(v -> {
+            Intent backIntent = new Intent(OrderActivity.this, ProductsDisplay.class);
+            startActivity(backIntent);
+        });
     }
 
     private void placeOrder() {
