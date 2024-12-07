@@ -79,6 +79,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return result;
     }
+    // Insert a new admin into the database
+    public boolean insertAdmin(String adminName, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ADMIN_NAME, adminName);
+        values.put(COLUMN_PASSWORD, password);
+
+        long result = db.insert(TABLE_ADMIN, null, values);
+        return result != -1;  // Return true if insertion succeeded
+    }
 
     // Insert a new product
     public boolean insertProduct(String productName, double productPrice, int productQuantity, byte[] productImage) {
