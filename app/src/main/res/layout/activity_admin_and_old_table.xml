@@ -28,24 +28,7 @@
         android:fontFamily="cursive"
         tools:ignore="TextContrastCheck" />
 
-    <EditText
-        android:id="@+id/AD_ed"
-        android:layout_width="match_parent"
-        android:layout_height="69dp"
-        android:drawableTint="#12a4d9"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/edit_text_box"
-        android:drawableStart="@drawable/name"
-        android:drawablePadding="8dp"
-        android:hint="Enter Table Name"
-        android:fontFamily="serif"
-        android:inputType="textPersonName"
-        android:minHeight="40dp"
-        android:paddingTop="8dp"
-        android:textColorHint="#FFFF5722"
-        android:textSize="16sp"
-        tools:ignore="VisualLintTextFieldSize,TextContrastCheck"
-        android:autofillHints="" />
+
 
     <EditText
         android:id="@+id/pass_ed"
@@ -66,22 +49,7 @@
         tools:ignore="VisualLintTextFieldSize,TextContrastCheck"
         android:autofillHints="" />
 
-    <EditText
-        android:id="@+id/table_capacity"
-        android:layout_width="match_parent"
-        android:layout_height="69dp"
-        android:layout_marginTop="24dp"
-        android:drawableStart="@drawable/capacity"
-        android:fontFamily="serif"
-        android:drawablePadding="8dp"
-        android:background="@drawable/edit_text_box"
-        android:drawableTint="#12a4d9"
-        android:hint="Enter Table Capacity"
-        android:inputType="number"
-        android:minHeight="40dp"
-        android:paddingTop="8dp"
-        android:textColorHint="#FFFF5722"
-        android:textSize="16sp"/>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

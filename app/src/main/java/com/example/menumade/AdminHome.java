@@ -1,72 +1,74 @@
 package com.example.menumade;
 
-import android.content.Intent;   //from content package importing Intent class
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AdminHome extends AppCompatActivity {
 
-    @Override     // Overriding the onCreate method to initialize the activity
+    private Button btnInsertProduct, btnViewProduct, btnUpdateProduct, btnDeleteProduct, btnViewOrders, btnTable, btnBack;
+    private TextView tvTableList;
+    private ListView lvTableList; // ListView to show tables
+    private DatabaseHelper databaseHelper;
 
-    protected void onCreate(Bundle savedInstanceState) {  //  savedInstanceState previous state saved
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_home); // show ui component
+        setContentView(R.layout.activity_admin_home);
 
-        Button btnInsertProduct = findViewById(R.id.btn_insert_product); // initialize Ui component
-        Button btnViewProduct = findViewById(R.id.btn_view_product);
-        Button btnUpdateProduct = findViewById(R.id.btn_update_product);
-        Button btnDeleteProduct = findViewById(R.id.btn_delete_product);
-        Button btnViewOrders = findViewById(R.id.btn_view_orders);
+        // Initialize views
+        btnInsertProduct = findViewById(R.id.btn_insert_product);
+        btnViewProduct = findViewById(R.id.btn_view_product);
+        btnUpdateProduct = findViewById(R.id.btn_update_product);
+        btnDeleteProduct = findViewById(R.id.btn_delete_product);
+        btnViewOrders = findViewById(R.id.btn_view_orders);
+        btnTable = findViewById(R.id.btn_table);
+        btnBack = findViewById(R.id.btn_back4);
+        lvTableList = findViewById(R.id.lv_table_list);  // ListView
+        tvTableList = findViewById(R.id.tv_table_list);
 
-        btnInsertProduct.setOnClickListener(new View.OnClickListener() { // clickable
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(AdminHome.this, InsertTableItemActivity.class);
-                startActivity(intent1); // start the new activity
-            }
-        });
+        // Initialize DatabaseHelper
+        databaseHelper = new DatabaseHelper(this);
 
-        btnViewProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent2 = new Intent(AdminHome.this, ViewTableActivity.class);
-                startActivity(intent2);
-            }
-        });
+        // Set listeners for buttons
+        btnInsertProduct.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, InsertTableItemActivity.class)));
+        btnViewProduct.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, ViewTableActivity.class)));
+        btnUpdateProduct.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, UpdateTableItemActivity.class)));
+        btnDeleteProduct.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, DeleteTableItemActivity.class)));
+        btnViewOrders.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, AdminOrderDetailsActivity.class)));
 
-        btnUpdateProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent3 = new Intent(AdminHome.this, UpdateTableItemActivity.class);
-                startActivity(intent3);
-            }
-        });
+        btnBack.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, AdminSignUp.class)));
 
-        btnDeleteProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent4 = new Intent(AdminHome.this, DeleteTableItemActivity.class);
-                startActivity(intent4);
-            }
-        });
+        btnTable.setOnClickListener(v -> showTables());
+    }
 
-        btnViewOrders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent5 = new Intent(AdminHome.this, AdminOrderDetailsActivity.class);
-                startActivity(intent5);
-            }
-        });
-        Button backButton = findViewById(R.id.btn_back4);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent6 = new Intent(AdminHome.this, AdminLogin.class);
-                startActivity(intent6);
-            }
-        });
+    // Method to display all tables in a ListView
+    private void showTables() {
+        // Hide other buttons
+        btnInsertProduct.setVisibility(View.GONE);
+        btnViewProduct.setVisibility(View.GONE);
+        btnUpdateProduct.setVisibility(View.GONE);
+        btnDeleteProduct.setVisibility(View.GONE);
+        btnViewOrders.setVisibility(View.GONE);
+
+        // Get all tables from the database
+        Cursor cursor = databaseHelper.getAllTables();
+
+        if (cursor != null && cursor.getCount() > 0) {
+            TableAdapter tableAdapter = new TableAdapter(this, cursor);
+            lvTableList.setAdapter(tableAdapter);  // Set the custom adapter
+            tvTableList.setVisibility(View.GONE);  // Hide TextView since we are using ListView now
+            lvTableList.setVisibility(View.VISIBLE);  // Show the ListView
+        } else {
+            tvTableList.setText("No tables in the database.");
+            tvTableList.setVisibility(View.VISIBLE);
+            lvTableList.setVisibility(View.GONE);  // Hide ListView if no tables are found
+        }
     }
 }
