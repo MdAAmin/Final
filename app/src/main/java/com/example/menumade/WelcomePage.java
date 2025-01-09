@@ -41,7 +41,7 @@ public class WelcomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 customToast.show();
-                Intent intent = new Intent(WelcomePage.this, CustomerConnectionActivity.class);
+                Intent intent = new Intent(WelcomePage.this, TableBooking.class);
                 startActivity(intent);
             }
         });
