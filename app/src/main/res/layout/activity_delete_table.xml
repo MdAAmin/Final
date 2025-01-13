@@ -76,12 +76,12 @@
     <!-- Product Image -->
     <ImageView
         android:id="@+id/image_view_product"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
+        android:layout_width="382dp"
+        android:layout_height="354dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/img_1"
-        android:contentDescription="Product Image" />
+        android:contentDescription="Product Image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_delete" />
 
     <!-- Horizontal layout for side-by-side buttons -->
     <LinearLayout

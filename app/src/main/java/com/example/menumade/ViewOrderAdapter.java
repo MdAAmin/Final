@@ -1,6 +1,5 @@
 package com.example.menumade;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -8,50 +7,48 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.OrderViewHolder> {
 
     private Context context;
     private Cursor cursor;
 
-    // Constructor
     public ViewOrderAdapter(Context context, Cursor cursor) {
         this.context = context;
         this.cursor = cursor;
     }
 
-    @NonNull
     @Override
-    public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the item layout for each order
-        View view = LayoutInflater.from(context).inflate(R.layout.item_order, parent, false);
+    public OrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.order_list_item, parent, false);
         return new OrderViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        // Move the cursor to the appropriate position
+    public void onBindViewHolder(OrderViewHolder holder, int position) {
         if (cursor != null && cursor.moveToPosition(position)) {
-            // Access columns with correct names from the database
-            @SuppressLint("Range")
-            String name = cursor.getString(cursor.getColumnIndex("product_name")); // Ensure this matches your database column
-            @SuppressLint("Range")
-            double price = cursor.getDouble(cursor.getColumnIndex("product_price"));
-            @SuppressLint("Range")
-            int quantity = cursor.getInt(cursor.getColumnIndex("product_quantity"));
+            String productName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ORDER_PRODUCT_NAME));
+            double price = cursor.getDouble(cursor.getColumnIndex(DatabaseHelper.COLUMN_ORDER_PRICE));
+            int quantity = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ORDER_QUANTITY));
+            int tableNumber = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TABLE_NUMBER));
 
-            // Bind data to views
-            holder.tvName.setText("Name: " + name);
-            holder.tvPrice.setText("Price: $" + price);
-            holder.tvQuantity.setText("Quantity: " + quantity);
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+            String formattedPrice = currencyFormat.format(price);
+
+            holder.productNameTextView.setText(productName);
+            holder.priceTextView.setText(formattedPrice);
+            holder.quantityTextView.setText(String.valueOf(quantity));
+            holder.tableNumberTextView.setText("Table #: " + tableNumber);
         }
     }
 
     @Override
     public int getItemCount() {
-        return cursor != null ? cursor.getCount() : 0; // Return the number of items in the cursor
+        return cursor != null ? cursor.getCount() : 0;
     }
 
     // Optional: Update the cursor with new data and notify the adapter
@@ -63,16 +60,18 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.Orde
         notifyDataSetChanged();
     }
 
-    // ViewHolder class for the RecyclerView
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvPrice, tvQuantity;
+        TextView productNameTextView;
+        TextView priceTextView;
+        TextView quantityTextView;
+        TextView tableNumberTextView;
 
-        public OrderViewHolder(@NonNull View itemView) {
+        public OrderViewHolder(View itemView) {
             super(itemView);
-            // Find views in the layout
-            tvName = itemView.findViewById(R.id.tv_order_name);
-            tvPrice = itemView.findViewById(R.id.tv_order_price);
-            tvQuantity = itemView.findViewById(R.id.tv_order_quantity);
+            productNameTextView = itemView.findViewById(R.id.tv_order_name);
+            priceTextView = itemView.findViewById(R.id.tv_order_price);
+            quantityTextView = itemView.findViewById(R.id.tv_order_quantity);
+            tableNumberTextView = itemView.findViewById(R.id.orderTableNumberTextView);
         }
     }
 }

@@ -11,9 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class OrderActivity extends AppCompatActivity {
 
+    private EditText tableNumberEditText;
     private EditText productNameEditText;
     private EditText productPriceEditText;
     private EditText productQuantityEditText;
+
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -21,68 +23,90 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        // Initialize UI elements
+        tableNumberEditText = findViewById(R.id.tableNumberEditText);
         productNameEditText = findViewById(R.id.productNameEditText);
         productPriceEditText = findViewById(R.id.productPriceEditText);
         productQuantityEditText = findViewById(R.id.productQuantityEditText);
-
         Button placeOrderButton = findViewById(R.id.placeOrderButton);
-        Button btnBack = findViewById(R.id.btn_back8);
+
+        // Back button setup
+        Button buttonBack = findViewById(R.id.btn_back8);
+        buttonBack.setOnClickListener(v -> {
+            Intent intent = new Intent(OrderActivity.this, CustomerConnectionActivity.class);
+            startActivity(intent);
+        });
 
         // Initialize DatabaseHelper
         databaseHelper = new DatabaseHelper(this);
 
-        // Get the product details passed from ProductsDisplay activity
+        // Get intent extras
         Intent intent = getIntent();
-        String productName = intent.getStringExtra("productName");
-        double productPrice = intent.getDoubleExtra("productPrice", 0);
-        int productQuantity = intent.getIntExtra("productQuantity", 0);
+        if (intent != null) {
+            int tableNumber = intent.getIntExtra("tableNumber", -1); // Default -1 if no table number provided
+            String productName = intent.getStringExtra("productName");
+            double productPrice = intent.getDoubleExtra("productPrice", 0.0);
+            int productQuantity = intent.getIntExtra("productQuantity", 0);
 
-        productNameEditText.setText(productName);
-        productPriceEditText.setText(String.valueOf(productPrice));
-        productQuantityEditText.setText(String.valueOf(productQuantity));
+            // Set values to EditTexts
+            if (tableNumber != -1) {
+                tableNumberEditText.setText(String.valueOf(tableNumber));
+                tableNumberEditText.setEnabled(false); // Make it read-only
+            }
+            productNameEditText.setText(productName);
+            productPriceEditText.setText(String.valueOf(productPrice));
+            productQuantityEditText.setText(String.valueOf(productQuantity));
 
+            // Disable productName and productPrice fields (display only)
+            productNameEditText.setEnabled(false);
+            productPriceEditText.setEnabled(false);
+        }
+
+        // Set click listener for the place order button
         placeOrderButton.setOnClickListener(v -> placeOrder());
-
-        btnBack.setOnClickListener(v -> {
-            Intent backIntent = new Intent(OrderActivity.this, ProductsDisplay.class);
-            startActivity(backIntent);
-        });
     }
 
     private void placeOrder() {
+        String tableNumberStr = tableNumberEditText.getText().toString();
         String productName = productNameEditText.getText().toString();
-        double productPrice = Double.parseDouble(productPriceEditText.getText().toString());
+        String productPriceStr = productPriceEditText.getText().toString();
         String quantityStr = productQuantityEditText.getText().toString();
 
-        if (productName.isEmpty() || productPrice <= 0 || quantityStr.isEmpty()) {
-            customToast("Please enter valid order details");
+        // Validate input
+        if (tableNumberStr.isEmpty() || productName.isEmpty() || productPriceStr.isEmpty() || quantityStr.isEmpty()) {
+            Toast.makeText(this, "Please enter valid order details", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        int productQuantity;
         try {
-            productQuantity = Integer.parseInt(quantityStr);
-            if (productQuantity <= 0) {
-                customToast("Quantity must be greater than zero");
+            int tableNumber = Integer.parseInt(tableNumberStr);
+            double productPrice = Double.parseDouble(productPriceStr);
+            int productQuantity = Integer.parseInt(quantityStr);
+
+            if (tableNumber <= 0 || productPrice <= 0 || productQuantity <= 0) {
+                Toast.makeText(this, "Values must be greater than zero", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            // Insert order into the database
+            boolean isInserted = databaseHelper.insertOrder(productName, productPrice, productQuantity, tableNumber);
+
+            if (isInserted) {
+                // Show success message
+                Toast.makeText(this, "Order placed successfully", Toast.LENGTH_SHORT).show();
+
+                // Clear input fields
+                tableNumberEditText.setText("");
+                productNameEditText.setText("");
+                productPriceEditText.setText("");
+                productQuantityEditText.setText("");
+
+            } else {
+                Toast.makeText(this, "Error placing order", Toast.LENGTH_SHORT).show();
+            }
+
         } catch (NumberFormatException e) {
-            customToast("Please enter a valid quantity");
-            return;
+            Toast.makeText(this, "Please enter valid numbers", Toast.LENGTH_SHORT).show();
         }
-
-        // Insert order into the database
-        databaseHelper.insertOrder(productName, productPrice, productQuantity);
-
-        // Show success message
-        customToast("Order placed successfully");
-
-        productNameEditText.setText("");
-        productPriceEditText.setText("");
-        productQuantityEditText.setText("");
-    }
-
-    private void customToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }

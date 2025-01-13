@@ -16,7 +16,7 @@ public class CustomerConnectionActivity extends AppCompatActivity {
 
         Button btnProductDisplay = findViewById(R.id.BTN_Product_Display);
         Button btnPersonalizedRecommendations = findViewById(R.id.BTN_Personalized_Recommendations);
-        Button btnPayment = findViewById(R.id.Payment);
+
 
 
         btnProductDisplay.setOnClickListener(v -> {
@@ -25,9 +25,5 @@ public class CustomerConnectionActivity extends AppCompatActivity {
         });
 
 
-        btnPayment.setOnClickListener(v -> {
-            Toast.makeText(CustomerConnectionActivity.this, "Navigating to Payment Activity", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(CustomerConnectionActivity.this, Payment.class));
-        });
     }
 }

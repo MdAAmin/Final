@@ -1,82 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".OrderActivity">
 
+    <!-- Product Name EditText -->
     <EditText
         android:id="@+id/productNameEditText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:hint="Product Name"
+        android:minHeight="48dp"
         android:textColor="#333333"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp" />
 
+    <!-- Product Price EditText -->
     <EditText
         android:id="@+id/productPriceEditText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:hint="Product Price"
+        android:minHeight="48dp"
         android:textColor="#333333"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productNameEditText" />
+        android:textSize="16sp" />
 
+    <!-- Product Quantity EditText -->
     <EditText
         android:id="@+id/productQuantityEditText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:hint="Product Quantity"
+        android:minHeight="48dp"
         android:textColor="#333333"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productPriceEditText" />
+        android:textSize="16sp" />
 
-    <Spinner
-        android:id="@+id/categorySpinner"
-        android:layout_width="0dp"
+    <!-- Table Number EditText -->
+    <EditText
+        android:id="@+id/tableNumberEditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productQuantityEditText" />
+        android:hint="Table Number"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textColor="#333333"
+        android:textSize="16sp" />
 
+    <!-- Place Order Button -->
     <Button
         android:id="@+id/placeOrderButton"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Place Order"
         android:layout_marginTop="20dp"
+        android:text="Place Order"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#FF6200EE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categorySpinner" />
+        android:backgroundTint="#FF6200EE" />
 
+    <!-- Back Button -->
     <Button
         android:id="@+id/btn_back8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
         android:text="Back"
-        android:textColor="#FF6200EE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/placeOrderButton"
-        android:layout_marginTop="16dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textColor="#FF6200EE" />
+
+</LinearLayout>

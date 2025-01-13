@@ -5,39 +5,47 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // Database Info
     public static final String DATABASE_NAME = "MenuMade.db";
-    public static final int DATABASE_VERSION = 3; // Incremented version
+    public static final int DATABASE_VERSION = 4;
 
-    // Table Names
     public static final String TABLE_ADMIN = "admin";
+    public static final String TABLE_USER = "user";
     public static final String TABLE_PRODUCTS = "products";
-    public static final String TABLE_TABLES = "tables"; // New table for storing table info
+    public static final String TABLE_TABLES = "tables";
+    public static final String TABLE_ORDERS = "orders";  // Fixed table name
 
-    // Admin Table Columns
     public static final String COLUMN_ADMIN_ID = "admin_id";
     public static final String COLUMN_ADMIN_NAME = "admin_name";
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PHONE = "phone";
 
-    // Products Table Columns
+    public static final String COLUMN_USER_ID = "user_id";
+    public static final String COLUMN_USER_NAME = "username";
+    public static final String COLUMN_USER_PASSWORD = "password";
+    public static final String COLUMN_USER_EMAIL = "email";
+    public static final String COLUMN_USER_PHONE = "phone";
+
+
     public static final String COLUMN_PRODUCT_ID = "product_id";
     public static final String COLUMN_PRODUCT_NAME = "product_name";
     public static final String COLUMN_PRODUCT_PRICE = "product_price";
-    public static final String COLUMN_PRODUCT_QUANTITY = "product_quantity"; // Added quantity
-    public static final String COLUMN_PRODUCT_IMAGE = "product_image"; // Optional, to store images as blobs
-
-    // Tables Table Columns (New)
-    public static final String COLUMN_TABLE_ID = "table_id"; // Primary Key for Table
-    public static final String COLUMN_TABLE_NAME = "table_name";
+    public static final String COLUMN_PRODUCT_QUANTITY = "product_quantity";
+    public static final String COLUMN_PRODUCT_IMAGE = "product_image";
+    public static final String COLUMN_TABLE_ID = "table_id";
     public static final String COLUMN_TABLE_NUMBER = "table_number";
-    public static final String COLUMN_TABLE_CAPACITY = "table_capacity";
 
-    // Create Admin Table
+    // Orders Table Column Names
+    public static final String COLUMN_ORDER_ID = "order_id"; // Added order ID
+    public static final String COLUMN_ORDER_PRODUCT_NAME = "product_name";
+    public static final String COLUMN_ORDER_PRICE = "o_price";
+    public static final String COLUMN_ORDER_QUANTITY = "o_quantity";
+
+    // Creating tables
     private static final String CREATE_ADMIN_TABLE = "CREATE TABLE " + TABLE_ADMIN + " (" +
             COLUMN_ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_ADMIN_NAME + " TEXT NOT NULL UNIQUE, " +
@@ -45,7 +53,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_EMAIL + " TEXT, " +
             COLUMN_PHONE + " TEXT);";
 
-    // Create Products Table
+    private static final String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + " (" +
+            COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_USER_NAME + " TEXT NOT NULL UNIQUE, " +
+            COLUMN_USER_PASSWORD + " TEXT NOT NULL, " +
+            COLUMN_USER_EMAIL + " TEXT, " +
+            COLUMN_USER_PHONE + " TEXT);";
+
+
     private static final String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + TABLE_PRODUCTS + " (" +
             COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_PRODUCT_NAME + " TEXT NOT NULL UNIQUE, " +
@@ -53,10 +68,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL, " +
             COLUMN_PRODUCT_IMAGE + " BLOB);";
 
-    // Create Tables Table (New)
     private static final String CREATE_TABLES_TABLE = "CREATE TABLE " + TABLE_TABLES + " (" +
             COLUMN_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_TABLE_NUMBER + " INTEGER NOT NULL UNIQUE);";
+
+    // Orders table creation
+    private static final String CREATE_ORDERS_TABLE = "CREATE TABLE " + TABLE_ORDERS + "(" +
+            COLUMN_ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_ORDER_PRODUCT_NAME + " TEXT, " +
+            COLUMN_ORDER_PRICE + " REAL, " +
+            COLUMN_ORDER_QUANTITY + " INTEGER, " +
+            COLUMN_TABLE_NUMBER + " INTEGER, " + // Add this line
+            "FOREIGN KEY (" + COLUMN_TABLE_NUMBER + ") REFERENCES " + TABLE_TABLES + "(" + COLUMN_TABLE_NUMBER + "));";
 
 
     public DatabaseHelper(Context context) {
@@ -66,76 +89,83 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_ADMIN_TABLE);
+        db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_PRODUCTS_TABLE);
-        db.execSQL(CREATE_TABLES_TABLE); // Create new tables table
-
-        // Insert default admin
-        ContentValues defaultAdmin = new ContentValues();
-        defaultAdmin.put(COLUMN_ADMIN_NAME, "Admin");
-        defaultAdmin.put(COLUMN_PASSWORD, "12345Aa@");
-        db.insert(TABLE_ADMIN, null, defaultAdmin);
+        db.execSQL(CREATE_TABLES_TABLE);
+        db.execSQL(CREATE_ORDERS_TABLE);  // Fixed orders table creation
+        addAdmin(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
-            db.execSQL("ALTER TABLE " + TABLE_ADMIN + " ADD COLUMN " + COLUMN_EMAIL + " TEXT;");
-            db.execSQL("ALTER TABLE " + TABLE_ADMIN + " ADD COLUMN " + COLUMN_PHONE + " TEXT;");
-        }
-        if (oldVersion < 3) {
-            db.execSQL(CREATE_TABLES_TABLE); // Add new table creation for version 3
+        db.execSQL("PRAGMA foreign_keys=ON;");
+
+        if (oldVersion < 4) {
+            // If upgrading to version 4, recreate the orders table with foreign keys (if needed)
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDERS);
+            db.execSQL(CREATE_ORDERS_TABLE);  // Recreate the orders table with the correct foreign key
+
+            // Ensure the 'user' table exists if upgrading from an older version
+            if (oldVersion < 3) {
+                // Drop and recreate other tables if needed
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMIN);
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS);
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_TABLES);
+                onCreate(db); // Recreate all tables
+            }
         }
     }
 
-    // Check Admin Credentials
-    public boolean checkAdmin(String adminName, String password) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        boolean result = false;
-        try {
-            cursor = db.query(TABLE_ADMIN,
-                    null,
-                    COLUMN_ADMIN_NAME + "=? AND " + COLUMN_PASSWORD + "=?",
-                    new String[]{adminName, password}, null, null, null);
-            result = cursor != null && cursor.getCount() > 0;
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return result;
-    }
 
-    // Register new Admin
-    public boolean registerAdmin(String adminName, String password, String email, String phone) {
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor = null;
-        try {
-            cursor = db.query(TABLE_ADMIN,
-                    new String[]{COLUMN_ADMIN_NAME},
-                    COLUMN_ADMIN_NAME + "=?",
-                    new String[]{adminName},
-                    null, null, null);
 
-            if (cursor != null && cursor.getCount() > 0) {
-                return false; // Admin already exists
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
 
+    private void addAdmin(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_ADMIN_NAME, adminName);
-        values.put(COLUMN_PASSWORD, password);
-        values.put(COLUMN_EMAIL, email);
-        values.put(COLUMN_PHONE, phone);
+        values.put(COLUMN_ADMIN_NAME, "Admin");
+        values.put(COLUMN_PASSWORD, "12345Aa@");
+        db.insert(TABLE_ADMIN, null, values);
+    }
 
-        long result = db.insert(TABLE_ADMIN, null, values);
+
+    // Add user, check credentials, update and delete operations (as in your original code)
+    public boolean addUser(String username, String password, String email, String phone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_NAME, username);
+        values.put(COLUMN_USER_PASSWORD, password);
+        values.put(COLUMN_USER_EMAIL, email);
+        values.put(COLUMN_USER_PHONE, phone);
+
+        long result = db.insert(TABLE_USER, null, values);
         return result != -1;
     }
+
+
+    public boolean checkAdmin(String username, String password) {
+        return checkCredentials(TABLE_ADMIN, username, password, COLUMN_ADMIN_NAME);
+    }
+
+    public boolean checkUser(String username, String password) {
+        return checkCredentials(TABLE_USER, username, password, COLUMN_USER_NAME);
+    }
+
+
+    private boolean checkCredentials(String tableName, String username, String password, String columnName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {tableName.equals(TABLE_ADMIN) ? COLUMN_ADMIN_ID : COLUMN_USER_ID};
+        String selection = columnName + "=? AND " + COLUMN_PASSWORD + "=?";
+        String[] selectionArgs = {username, password};
+        Cursor cursor = db.query(tableName, columns, selection, selectionArgs, null, null, null);
+
+        boolean isValid = cursor.getCount() > 0;
+        cursor.close();
+        return isValid;
+    }
+
+
+
 
     // Insert a new product
     public boolean insertProduct(String productName, double productPrice, int productQuantity, byte[] productImage) {
@@ -221,11 +251,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Get all products as orders
-    public Cursor getAllOrders() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT product_id AS _id, product_name, product_price, product_quantity FROM " + TABLE_PRODUCTS + " WHERE product_quantity > 0", null);
+    public boolean insertOrder(String productName, double price, int quantity, int tableNumber) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ORDER_PRODUCT_NAME, productName);
+        values.put(COLUMN_ORDER_PRICE, price);
+        values.put(COLUMN_ORDER_QUANTITY, quantity);
+        values.put(COLUMN_TABLE_NUMBER, tableNumber);
+
+        // Insert order and check if insertion was successful
+        long result = db.insert(TABLE_ORDERS, null, values);
+        if (result == -1) {
+            Log.e("Database Insert", "Failed to insert order");
+        } else {
+            Log.d("Database Insert", "Order inserted successfully");
+        }
+        return false;
     }
 
-    public void insertOrder(String productName, double productPrice, int productQuantity) {
+
+
+
+    public Cursor getAllOrders() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query("orders", new String[]{"order_id", "product_name", "o_price", "o_quantity", "table_number"},
+                null, null, null, null, null);
     }
+
+
 }

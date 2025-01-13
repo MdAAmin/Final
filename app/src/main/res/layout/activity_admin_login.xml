@@ -1,33 +1,45 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
     android:id="@+id/main">
 
+    <!-- Admin Name EditText -->
     <EditText
         android:id="@+id/et_admin_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Admin Name EditText"
         android:hint="Admin Name"
+        android:importantForAccessibility="yes"
         android:inputType="text"
         android:padding="12dp"
-        android:layout_marginBottom="16dp" />
+        tools:ignore="EditableContentDescCheck" />
 
+    <!-- Password EditText -->
     <EditText
         android:id="@+id/et_admin_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Password EditText"
         android:hint="Password"
+        android:importantForAccessibility="yes"
         android:inputType="textPassword"
         android:padding="12dp"
-        android:layout_marginBottom="16dp" />
+        tools:ignore="EditableContentDescCheck" />
 
+    <!-- Login Button -->
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login" />
+        android:text="Login"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Login Button" />
 
 </LinearLayout>

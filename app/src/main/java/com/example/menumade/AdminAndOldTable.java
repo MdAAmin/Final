@@ -77,7 +77,7 @@ public class AdminAndOldTable extends AppCompatActivity {
         Button adminButton = findViewById(R.id.BTN_ADMIN);
         adminButton.setOnClickListener(v -> {
             customToast.show();
-            Intent intent = new Intent(AdminAndOldTable.this, AdminSignUp.class);
+            Intent intent = new Intent(AdminAndOldTable.this, AdminHome.class);
             startActivity(intent);
         });
 

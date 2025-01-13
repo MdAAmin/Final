@@ -90,7 +90,7 @@
         android:minHeight="48dp"
         android:padding="8dp" />
 
-    <!-- Login Button -->
+    <!-- SignUp Button -->
     <Button
         android:id="@+id/btn_signup"
         android:layout_width="match_parent"
@@ -103,6 +103,36 @@
         android:minHeight="48dp"
         android:textStyle="bold" />
 
+    <!-- Default Password EditText (Initially Gone) -->
+    <EditText
+        android:id="@+id/ed_default_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Default Password"
+        android:drawableStart="@drawable/password"
+        android:drawablePadding="8dp"
+        android:background="@drawable/edittext_background"
+        android:layout_below="@id/btn_signup"
+        android:layout_marginTop="16dp"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:visibility="gone"
+        android:padding="8dp" />
+
+    <!-- Check Password Button (Initially Gone) -->
+    <Button
+        android:id="@+id/btn_check_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check Password"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1A73E8"
+        android:layout_below="@id/ed_default_password"
+        android:layout_marginTop="16dp"
+        android:minHeight="48dp"
+        android:visibility="gone" />
+
+    <!-- Login Button -->
     <Button
         android:id="@+id/btn_login2"
         android:layout_width="match_parent"
@@ -114,5 +144,4 @@
         android:text="Login"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
-
 </RelativeLayout>
