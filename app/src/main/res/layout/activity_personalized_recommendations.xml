@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#B48BC34A"
+    android:gravity="center"
+    tools:context=".PersonalizedRecommendationsActivity">
+
+    <TextView
+        android:id="@+id/recommendationsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:background="@drawable/edit_text_box"
+        android:textColor="#9C27B0"
+        android:padding="16dp"
+        android:text="Hit List"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_back10"
+        style="@style/MyButtonStyle"
+        android:layout_width="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="0"
+        android:text="Back"
+        tools:ignore="InefficientWeight,TextContrastCheck" />
+
+
+</LinearLayout>

@@ -18,7 +18,7 @@
         android:padding="16dp"
         android:layout_marginTop="48dp"
         android:paddingBottom="16dp"
-        android:text="Press the button below to go to your desired place"
+        android:text="Hit Below"
         android:textColor="#FF5722"
         android:textSize="24sp"
         android:textStyle="italic" />
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Personalized Recommendations3"
+        android:text="Try Out!!"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"

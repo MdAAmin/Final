@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "877599987740",
+    "project_id": "menumade-fb680",
+    "storage_bucket": "menumade-fb680.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877599987740:android:51fcd0b49d5edbc16327d9",
+        "android_client_info": {
+          "package_name": "com.example.menumade"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApZCjqWrRKU36bPw4WpDly5_ndZS-fHaw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

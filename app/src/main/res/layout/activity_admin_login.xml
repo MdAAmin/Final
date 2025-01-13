@@ -1,45 +1,62 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:id="@+id/main">
+    android:layout_height="match_parent">
 
-    <!-- Admin Name EditText -->
-    <EditText
-        android:id="@+id/et_admin_name"
+    <!-- Email EditText -->
+    <android.widget.EditText
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="Admin Name EditText"
-        android:hint="Admin Name"
-        android:importantForAccessibility="yes"
-        android:inputType="text"
-        android:padding="12dp"
-        tools:ignore="EditableContentDescCheck" />
+        android:hint="Enter email"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#A9A9A9"
+        android:textColor="#000000"
+        android:padding="16dp"
+        android:layout_marginTop="120dp"
+        android:layout_centerHorizontal="true" />
 
     <!-- Password EditText -->
-    <EditText
-        android:id="@+id/et_admin_password"
+    <android.widget.EditText
+        android:id="@+id/pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="Password EditText"
-        android:hint="Password"
-        android:importantForAccessibility="yes"
+        android:hint="Enter password"
         android:inputType="textPassword"
-        android:padding="12dp"
-        tools:ignore="EditableContentDescCheck" />
+        android:textColorHint="#A9A9A9"
+        android:textColor="#000000"
+        android:padding="16dp"
+        android:layout_below="@id/email"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
 
-    <!-- Login Button -->
+    <!-- ProgressBar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
+
+    <!-- Submit Button -->
     <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:importantForAccessibility="yes"
-        android:contentDescription="Login Button" />
+        android:layout_below="@id/pass"
+        android:layout_marginTop="32dp"
+        android:layout_centerHorizontal="true" />
 
-</LinearLayout>
+    <!-- Register TextView -->
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account? Sign Up"
+        android:textColor="#0000FF"
+        android:layout_below="@id/submit"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

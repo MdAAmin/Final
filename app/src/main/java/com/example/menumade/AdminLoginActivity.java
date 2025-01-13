@@ -2,55 +2,88 @@ package com.example.menumade;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AdminLoginActivity extends AppCompatActivity {
 
-    private DatabaseHelper databaseHelper;
+    private EditText emailEditText, passEditText;
+    private Button submit;
+    private TextView register;
+    private ProgressBar progressBar;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
 
-        databaseHelper = new DatabaseHelper(this);
+        emailEditText = findViewById(R.id.email);
+        passEditText = findViewById(R.id.pass);
+        submit = findViewById(R.id.submit);
+        register = findViewById(R.id.register);
+        progressBar = findViewById(R.id.progressBar);
+        auth = FirebaseAuth.getInstance();
 
-        // Initialize UI components
-        EditText adminNameEditText = findViewById(R.id.et_admin_name);
-        EditText passwordEditText = findViewById(R.id.et_admin_password);
-        Button loginButton = findViewById(R.id.btn_login); // Single Login Button
+        submit.setOnClickListener(v -> {
+            String email = emailEditText.getText().toString();
+            String pass = passEditText.getText().toString();
 
-        // Login Button click listener
-        loginButton.setOnClickListener(v -> {
-            String adminName = adminNameEditText.getText().toString().trim();
-            String password = passwordEditText.getText().toString().trim();
-
-            // Validate inputs
-            if (adminName.isEmpty()) {
-                adminNameEditText.setError("Admin Name is required.");
-                adminNameEditText.requestFocus();
-            } else if (password.isEmpty()) {
-                passwordEditText.setError("Password is required.");
-                passwordEditText.requestFocus();
+            // Input validation
+            if (email.isEmpty()) {
+                emailEditText.setError("Email cannot be empty!");
+                emailEditText.requestFocus();
+            } else if (pass.isEmpty()) {
+                passEditText.setError("Password cannot be empty!");
+                passEditText.requestFocus();
             } else {
-                // Check if the credentials match any user in the database
-                boolean isValidUser = databaseHelper.checkUser(adminName, password);
+                progressBar.setVisibility(View.VISIBLE);
 
-                if (isValidUser) {
-                    // If the credentials are valid, proceed to Admin Home
-                    Toast.makeText(AdminLoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AdminLoginActivity.this, AdminHome.class);
-                    startActivity(intent);
-                    finish(); // Close the login activity
-                } else {
-                    // If the credentials are invalid
-                    Toast.makeText(AdminLoginActivity.this, "Invalid credentials. Please try again.", Toast.LENGTH_SHORT).show();
-                }
+                // Admin login with Firebase Authentication
+                auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.GONE);
+                        FirebaseUser user = auth.getCurrentUser();
+
+                        if (task.isSuccessful()) {
+                            if (user != null && user.isEmailVerified()) {
+                                // Admin successfully logged in
+                                Toast.makeText(AdminLoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+
+                                // Redirect to Admin Dashboard Activity (assuming AdminDashboardActivity is the next screen)
+                                startActivity(new Intent(AdminLoginActivity.this, AdminHome.class));
+                                finish(); // Finish the login activity to prevent back navigation
+                            } else {
+                                // Email not verified, sign out and show an error message
+                                Toast.makeText(AdminLoginActivity.this, "Please verify your email.", Toast.LENGTH_SHORT).show();
+                                auth.signOut(); // Sign out the user
+                            }
+                        } else {
+                            // Login failed, show error
+                            Toast.makeText(AdminLoginActivity.this, "Login Failed! Check your credentials.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
+        });
+
+        register.setOnClickListener(v -> {
+            // Redirect to the AdminSignUpActivity for registration
+            startActivity(new Intent(AdminLoginActivity.this, AdminSignUp.class));
         });
     }
 }

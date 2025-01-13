@@ -24,6 +24,11 @@ public class CustomerConnectionActivity extends AppCompatActivity {
             startActivity(new Intent(CustomerConnectionActivity.this, ProductsDisplay.class));
         });
 
+        btnPersonalizedRecommendations.setOnClickListener(v -> {
+            Toast.makeText(CustomerConnectionActivity.this, "Navigating to Personalized Recommendations Activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(CustomerConnectionActivity.this, PersonalizedRecommendationsActivity.class));
+        });
+
 
     }
 }
