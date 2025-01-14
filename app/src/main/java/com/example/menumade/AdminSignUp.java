@@ -39,6 +39,7 @@ public class AdminSignUp extends AppCompatActivity {
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final String PHONE_REGEX = "^01[3-9]\\d{8}$";
     private static final String ADMIN_NAME_REGEX = "^[a-zA-Z0-9\\-_\\.]+([a-zA-Z0-9\\-_\\.\\s]*)$";
+    private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +93,8 @@ public class AdminSignUp extends AppCompatActivity {
             } else if (pass.isEmpty()) {
                 passEditText.setError("Password cannot be empty!");
                 passEditText.requestFocus();
-            } else if (pass.length() < 6) {
-                passEditText.setError("Password must be at least 6 characters!");
+            } else if (!pass.matches(PASSWORD_REGEX)) {
+                passEditText.setError("Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and be at least 8 characters long!");
                 passEditText.requestFocus();
             } else if (!pass.equals(confirmPass)) {
                 confirmPassEditText.setError("Passwords do not match!");
