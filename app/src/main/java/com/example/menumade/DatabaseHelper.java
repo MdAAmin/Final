@@ -128,14 +128,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + TABLE_TABLES, null);
     }
 
-    // Get a specific table by table number
-    public Cursor getTableByNumber(int tableNumber) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_TABLES,
-                null,  // Retrieve all columns
-                COLUMN_TABLE_NUMBER + "=?",
-                new String[]{String.valueOf(tableNumber)}, null, null, null);
-    }
 
 
     // Update an existing product
@@ -173,16 +165,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{productName}, null, null, null);
     }
 
-    // Get product by ID
-    public Cursor getProductById(int productId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_PRODUCTS,
-                null,
-                COLUMN_PRODUCT_ID + "=?",
-                new String[]{String.valueOf(productId)}, null, null, null);
-    }
 
-    // Get all products as orders
+
     public boolean insertOrder(String productName, double price, int quantity, int tableNumber) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -193,13 +177,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Insert order and check if insertion was successful
         long result = db.insert(TABLE_ORDERS, null, values);
+
+        // Close the database connection
+        db.close();
+
+        // If result is -1, it means insertion failed
         if (result == -1) {
             Log.e("Database Insert", "Failed to insert order");
+            return false; // Return false if insertion failed
         } else {
             Log.d("Database Insert", "Order inserted successfully");
+            return true; // Return true if insertion was successful
         }
-        return false;
     }
+
 
 
 

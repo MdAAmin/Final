@@ -83,6 +83,7 @@ public class OrderActivity extends AppCompatActivity {
             double productPrice = Double.parseDouble(productPriceStr);
             int productQuantity = Integer.parseInt(quantityStr);
 
+            // Validate input values
             if (tableNumber <= 0 || productPrice <= 0 || productQuantity <= 0) {
                 Toast.makeText(this, "Values must be greater than zero", Toast.LENGTH_SHORT).show();
                 return;
