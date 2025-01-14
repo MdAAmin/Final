@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CustomerConnectionActivity"
-    android:background="#D300BCD4"
+    android:background="#D1F3D1"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -32,6 +31,8 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:backgroundTint="#1E88E5"
+        android:elevation="8dp"
         tools:ignore="VisualLintButtonSize" />
 
     <Button
@@ -43,6 +44,8 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:backgroundTint="#FF4081"
+        android:elevation="8dp"
         tools:ignore="VisualLintButtonSize" />
 
 </LinearLayout>

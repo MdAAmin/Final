@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context=".UpdateTableItemActivity"
+    android:background="#DFF2EF"
     android:padding="16dp">
 
-    <!-- Header TextView -->
     <TextView
         android:id="@+id/text_view_header"
         android:layout_width="match_parent"
@@ -18,15 +18,16 @@
         android:gravity="center"
         android:layout_marginBottom="16dp" />
 
-    <!-- Product ID field (non-editable) -->
     <EditText
         android:id="@+id/edit_text_product_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints=""
         android:hint="Product Name"
         android:minHeight="48dp"
-        tools:ignore="TextContrastCheck,TextFields,VisualLintTextFieldSize" />
+        android:textColor="@android:color/black"
+        android:textColorHint="#546E7A"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_box2" />
 
     <EditText
         android:id="@+id/edit_text_product_price"
@@ -35,18 +36,22 @@
         android:hint="Product Price"
         android:inputType="numberDecimal"
         android:minHeight="48dp"
-        tools:ignore="Autofill,VisualLintTextFieldSize" />
+        android:textColor="@android:color/black"
+        android:textColorHint="#546E7A"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_box2" />
 
     <EditText
         android:id="@+id/edit_text_product_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints=""
         android:hint="Product Quantity"
         android:inputType="number"
         android:minHeight="48dp"
+        android:textColor="@android:color/black"
         android:textColorHint="#546E7A"
-        tools:ignore="VisualLintTextFieldSize" />
+        android:padding="16dp"
+        android:background="@drawable/edit_text_box2" />
 
     <TextView
         android:id="@+id/text_view_product_id"
@@ -58,8 +63,7 @@
         android:background="@android:color/darker_gray"
         android:textColor="@android:color/white"
         android:textSize="16sp"
-        android:enabled="false"
-        tools:ignore="ContentDescription" />
+        android:enabled="false" />
 
     <ImageView
         android:id="@+id/image_view_product"
@@ -67,20 +71,19 @@
         android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:layout_marginTop="16dp"
-        android:src="@drawable/img_1"
-        tools:ignore="ContentDescription" />
+        android:src="@drawable/img_1" />
 
     <Button
         android:id="@+id/button_select_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select Image"
-        android:textColor="@color/black"
-        android:backgroundTint="#03A9F4"
-        android:layout_marginTop="16dp"
-        tools:ignore="VisualLintButtonSize" />
+        android:textColor="#C5E1A5"
+        android:backgroundTint="#1E88E5"
+        android:textStyle="bold"
+        android:elevation="8dp"
+        android:layout_marginTop="16dp"/>
 
-    <!-- Horizontal layout for side-by-side buttons -->
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
@@ -98,7 +101,7 @@
             android:backgroundTint="@color/design_default_color_secondary_variant"
             android:text="Search"
             android:textColor="#000000"
-            tools:ignore="VisualLintButtonSize" />
+            android:elevation="8dp"/>
 
         <Button
             android:id="@+id/button_update"
@@ -109,8 +112,7 @@
             android:backgroundTint="#03A9F4"
             android:textColor="@color/black"
             android:text="Update Product"
-            tools:ignore="TextContrastCheck,VisualLintButtonSize" />
-
+            android:elevation="8dp" />
     </LinearLayout>
 
     <Button
@@ -122,6 +124,8 @@
         android:layout_marginBottom="16dp"
         android:layout_weight="0"
         android:text="Back"
-        tools:ignore="InefficientWeight,TextContrastCheck" />
-
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#FF4081"
+        android:textStyle="bold"
+        android:elevation="8dp"/>
 </LinearLayout>

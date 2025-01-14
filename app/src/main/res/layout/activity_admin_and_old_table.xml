@@ -123,15 +123,15 @@
 
     <Button
         android:id="@+id/BTN_Back"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_gravity="right"
-        android:backgroundTint="#f1c40f"
+        style="@style/MyButtonStyle"
+        android:layout_width="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="0"
         android:text="Back"
-        android:fontFamily="monospace"
-        android:textColor="#C2185B"
-        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#FF4081"
         android:textStyle="bold"
-        tools:ignore="VisualLintButtonSize" />
+        android:elevation="8dp"/>
 </LinearLayout>

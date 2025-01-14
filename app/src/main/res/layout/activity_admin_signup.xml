@@ -3,11 +3,8 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    android:background="#F3F4F6">
+    android:background="#DFF2EF">
 
-
-
-    <!-- Title Text for Admin SignUp -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,80 +16,121 @@
         android:layout_gravity="center"
         android:layout_marginBottom="24dp" />
 
-    <EditText
-        android:id="@+id/adminName"
+    <LinearLayout
+        android:id="@+id/inputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Admin Name"
-        android:minHeight="48dp" />
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:background="@drawable/edit_text_box2"
+        android:elevation="4dp"
+        android:clipToPadding="false"
+        android:radius="12dp">
 
-    <!-- Input for Email -->
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Email"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp" />
+        <EditText
+            android:id="@+id/adminName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Admin Name"
+            android:minHeight="48dp"
+            android:textColor="#37474F"
+            android:textColorHint="#B0BEC5"
+            android:padding="16dp"
+            android:background="@drawable/eds" />
 
-    <!-- Input for Password -->
-    <EditText
-        android:id="@+id/pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Password"
-        android:inputType="textPassword"
-        android:minHeight="48dp" />
-    <!-- Input for Password -->
-    <EditText
-        android:id="@+id/confirm_pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:minHeight="48dp" />
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:textColor="#37474F"
+            android:textColorHint="#B0BEC5"
+            android:padding="16dp"
+            android:background="@drawable/eds" />
 
-    <!-- Input for Phone Number -->
-    <EditText
-        android:id="@+id/phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Phone Number"
-        android:inputType="phone"
-        android:minHeight="48dp" />
+        <EditText
+            android:id="@+id/pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textColor="#37474F"
+            android:textColorHint="#B0BEC5"
+            android:padding="16dp"
+            android:background="@drawable/eds" />
 
-    <!-- Input for Admin Name -->
-    <EditText
-        android:id="@+id/default_adminName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Defalut Admin Name"
-        android:minHeight="48dp" />
+        <EditText
+            android:id="@+id/confirm_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textColor="#37474F"
+            android:textColorHint="#B0BEC5"
+            android:padding="16dp"
+            android:background="@drawable/eds" />
 
-    <!-- Input for Admin Password -->
-    <EditText
-        android:id="@+id/defalult_adminPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Default Admin Password"
-        android:inputType="textPassword"
-        android:minHeight="48dp" />
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Phone Number"
+            android:inputType="phone"
+            android:minHeight="48dp"
+            android:textColor="#37474F"
+            android:textColorHint="#B0BEC5"
+            android:padding="16dp"
+            android:background="@drawable/eds" />
 
-    <!-- Sign Up Button -->
+        <EditText
+            android:id="@+id/default_adminName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Default Admin Name"
+            android:minHeight="48dp"
+            android:textColor="#37474F"
+            android:textColorHint="#B0BEC5"
+            android:padding="16dp"
+            android:background="@drawable/eds" />
+
+        <EditText
+            android:id="@+id/defalult_adminPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Default Admin Password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textColor="#37474F"
+            android:textColorHint="#B0BEC5"
+            android:padding="16dp"
+            android:background="@drawable/eds" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up" />
+        android:text="Sign Up"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="24dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#1E88E5"
+        android:textStyle="bold"
+        android:elevation="8dp" />
 
-    <!-- ProgressBar for Loading -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <!-- Text for Already Registered Link -->
     <TextView
         android:id="@+id/alreadyRegistered"
         android:layout_width="wrap_content"
@@ -105,5 +143,4 @@
         android:text="Already Registered? Login"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="16sp" />
-
 </LinearLayout>

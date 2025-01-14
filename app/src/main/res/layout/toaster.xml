@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome"
+        android:text="Flying"
         android:textColor="#E36F4A"
         android:textSize="32sp"
         tools:ignore="TextContrastCheck" />

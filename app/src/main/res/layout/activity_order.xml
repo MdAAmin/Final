@@ -6,9 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="#D1F3D1"
     tools:context=".OrderActivity">
 
-    <!-- Product Name EditText -->
+    <TextView
+        android:id="@+id/instructionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please give the table number for first serve"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:gravity="center" />
+
     <EditText
         android:id="@+id/productNameEditText"
         android:layout_width="match_parent"
@@ -17,9 +28,9 @@
         android:hint="Product Name"
         android:minHeight="48dp"
         android:textColor="#333333"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:background="@drawable/edit_text_box2"/>
 
-    <!-- Product Price EditText -->
     <EditText
         android:id="@+id/productPriceEditText"
         android:layout_width="match_parent"
@@ -28,9 +39,9 @@
         android:hint="Product Price"
         android:minHeight="48dp"
         android:textColor="#333333"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:background="@drawable/edit_text_box2"/>
 
-    <!-- Product Quantity EditText -->
     <EditText
         android:id="@+id/productQuantityEditText"
         android:layout_width="match_parent"
@@ -39,9 +50,9 @@
         android:hint="Product Quantity"
         android:minHeight="48dp"
         android:textColor="#333333"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:background="@drawable/edit_text_box2"/>
 
-    <!-- Table Number EditText -->
     <EditText
         android:id="@+id/tableNumberEditText"
         android:layout_width="match_parent"
@@ -51,9 +62,9 @@
         android:inputType="number"
         android:minHeight="48dp"
         android:textColor="#333333"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:background="@drawable/edit_text_box2"/>
 
-    <!-- Place Order Button -->
     <Button
         android:id="@+id/placeOrderButton"
         android:layout_width="match_parent"
@@ -63,14 +74,18 @@
         android:textColor="#FFFFFF"
         android:backgroundTint="#FF6200EE" />
 
-    <!-- Back Button -->
     <Button
         android:id="@+id/btn_back8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
+        style="@style/MyButtonStyle"
+        android:layout_width="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="0"
         android:text="Back"
-        android:textColor="#FF6200EE" />
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#FF4081"
+        android:textStyle="bold"
+        android:elevation="8dp"/>
 
 </LinearLayout>
