@@ -40,9 +40,9 @@ public class ProductAdapter extends CursorAdapter {
         byte[] imageBytes = cursor.getBlob(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PRODUCT_IMAGE));
 
         // Set data to the views
-        nameTextView.setText(name);
-        priceTextView.setText(String.format("$%.2f", price)); // Formatting price
-        quantityTextView.setText("Qty: " + quantity);
+        nameTextView.setText("Name: " + name);
+        priceTextView.setText(String.format("Price: $%.2f", price));
+        quantityTextView.setText("Quantity: " + quantity);
 
         // Decode and set the product image, handle null image case
         if (imageBytes != null && imageBytes.length > 0) {

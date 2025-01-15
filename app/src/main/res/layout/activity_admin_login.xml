@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#DFF2EF">
@@ -31,68 +32,85 @@
         android:background="@drawable/edit_text_box2"
         android:elevation="4dp"
         android:layout_centerHorizontal="true"
-        android:clipToPadding="false"
-        android:radius="12dp">
+        android:clipToPadding="false">
 
-        <android.widget.EditText
-            android:id="@+id/email"
+        <!-- Email EditText -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="Enter Email"
-            android:inputType="textEmailAddress"
-            android:textColorHint="#000000"
-            android:textColor="#000000"
-            android:padding="12dp"
-            android:background="@drawable/edit_text_box2"
-            android:layout_marginBottom="16dp" />
+            app:hintTextColor="@color/black">
+
+            <android.widget.EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColorHint="#000000"
+                android:textColor="#000000"
+                android:padding="12dp"
+                android:background="@drawable/edit_text_box2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Password EditText with Eye Toggle -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:endIconMode="password_toggle"
+            app:endIconTint="#37474F"
+        android:hint="Enter Password">
 
         <android.widget.EditText
             android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Password"
             android:inputType="textPassword"
             android:textColorHint="#000000"
             android:textColor="#000000"
             android:padding="12dp"
-            android:background="@drawable/edit_text_box2"
-            android:layout_marginBottom="16dp" />
+            android:background="@drawable/edit_text_box2" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+</LinearLayout>
 
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Login"
-        android:layout_below="@id/inputLayout"
-        android:layout_marginTop="32dp"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="#1E88E5"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:elevation="8dp"
-        android:layout_marginBottom="24dp" />
+    <!-- Login Button -->
+<Button
+android:id="@+id/submit"
+android:layout_width="200dp"
+android:layout_height="50dp"
+android:text="Login"
+android:layout_below="@id/inputLayout"
+android:layout_marginTop="32dp"
+android:layout_centerHorizontal="true"
+android:backgroundTint="#1E88E5"
+android:textColor="#FFFFFF"
+android:textStyle="bold"
+android:elevation="8dp"
+android:layout_marginBottom="24dp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/submit"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-    android:layout_marginTop="20dp" />
+    <!-- Progress Bar -->
+<ProgressBar
+android:id="@+id/progressBar"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_below="@id/submit"
+android:layout_centerHorizontal="true"
+android:visibility="gone"
+android:layout_marginTop="20dp" />
 
-    <TextView
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Don't have an account? Sign Up"
-        android:textColor="#1E88E5"
-        android:layout_below="@id/submit"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+    <!-- Register Text -->
+<TextView
+android:id="@+id/register"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Don't have an account? Sign Up"
+android:textColor="#1E88E5"
+android:layout_below="@id/submit"
+android:layout_marginTop="20dp"
+android:layout_centerHorizontal="true"
+android:textSize="14sp"
+android:textStyle="bold" />
 
-</RelativeLayout>
+    </RelativeLayout>
