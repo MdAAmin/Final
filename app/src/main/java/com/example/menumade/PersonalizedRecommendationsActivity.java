@@ -1,58 +1,49 @@
 package com.example.menumade;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class PersonalizedRecommendationsActivity extends AppCompatActivity {
 
     private TextView recommendationsTextView;
+    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_personalized_recommendations);
 
         recommendationsTextView = findViewById(R.id.recommendationsTextView);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        Button backButton = findViewById(R.id.btn_back10);
+        backButton = findViewById(R.id.btn_back10);
 
-        // Load and display recommendations
-        loadRecommendations();
+        // Access the static food list from AdminFoodName activity
+        ArrayList<String> foodList = AdminFoodName.foodList;
 
+        // Build a single string from the list of food names
+        if (foodList != null && !foodList.isEmpty()) {
+            StringBuilder foodDisplay = new StringBuilder();
+            for (String food : foodList) {
+                foodDisplay.append(food).append("\n\n");
+            }
+            recommendationsTextView.setText(foodDisplay.toString());
+        } else {
+            recommendationsTextView.setText("No food recommendations available.");
+        }
+
+        // Back button to navigate back to AdminFoodNameActivity
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate back to UserConnectionActivity
-                Intent intent1 = new Intent(PersonalizedRecommendationsActivity.this, CustomerConnectionActivity.class);
-                startActivity(intent1);
+                Intent intent = new Intent(PersonalizedRecommendationsActivity.this, CustomerConnectionActivity.class);
+                startActivity(intent);
             }
         });
     }
-
-    private void loadRecommendations() {
-        // Sample recommendations
-        String[] recommendations = {
-                "Try our new Spicy Chicken Burger!",
-                "How about a refreshing Mango Smoothie?",
-                "Have you tasted our Chocolate Lava Cake yet?",
-                "Our Caesar Salad is a must-try!",
-                "Enjoy a classic Margherita Pizza!"
-        };
-
-        StringBuilder recommendationsBuilder = new StringBuilder();
-        for (String recommendation : recommendations) {
-            recommendationsBuilder.append(recommendation).append("\n\n");
-        }
-
-        recommendationsTextView.setText(recommendationsBuilder.toString());
-    }
 }
-

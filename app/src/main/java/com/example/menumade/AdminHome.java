@@ -1,5 +1,6 @@
 package com.example.menumade;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,7 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AdminHome extends AppCompatActivity {
 
-    private Button btnInsertProduct, btnViewProduct, btnUpdateProduct, btnDeleteProduct, btnViewOrders, btnTable, btnBack;
+    private Button btnInsertProduct;
+    private Button btnViewProduct;
+    private Button btnUpdateProduct;
+    private Button btnDeleteProduct;
+    private Button btnViewOrders;
+    private Button btnSpecializedItem;  // Corrected button ID
+    private Button btnTable;
+    private Button btnBack;
     private TextView tvTableList;
     private ListView lvTableList; // ListView to show tables
     private DatabaseHelper databaseHelper;
@@ -23,6 +31,7 @@ public class AdminHome extends AppCompatActivity {
         setContentView(R.layout.activity_admin_home);
 
         // Initialize views
+        btnSpecializedItem = findViewById(R.id.btn_specialized_item);  // Corrected ID
         btnInsertProduct = findViewById(R.id.btn_insert_product);
         btnViewProduct = findViewById(R.id.btn_view_product);
         btnUpdateProduct = findViewById(R.id.btn_update_product);
@@ -42,20 +51,28 @@ public class AdminHome extends AppCompatActivity {
         btnUpdateProduct.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, UpdateTableItemActivity.class)));
         btnDeleteProduct.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, DeleteTableItemActivity.class)));
         btnViewOrders.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, AdminOrderDetailsActivity.class)));
+        btnBack.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, AdminAndOldTable.class)));
 
-        btnBack.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, AdminSignUp.class)));
+        // Set click listener for Specialized Item button
+        btnSpecializedItem.setOnClickListener(v -> startActivity(new Intent(AdminHome.this, AdminFoodName.class)));
 
+        // Set click listener for Num of Table button
         btnTable.setOnClickListener(v -> showTables());
     }
 
     // Method to display all tables in a ListView
+    @SuppressLint("SetTextI18n")
     private void showTables() {
-        // Hide other buttons
+        // Hide the
+        btnSpecializedItem.setVisibility(View.GONE);
+        btnTable.setVisibility(View.GONE);
+
         btnInsertProduct.setVisibility(View.GONE);
         btnViewProduct.setVisibility(View.GONE);
         btnUpdateProduct.setVisibility(View.GONE);
         btnDeleteProduct.setVisibility(View.GONE);
         btnViewOrders.setVisibility(View.GONE);
+        btnBack.setVisibility(View.GONE);
 
         // Get all tables from the database
         Cursor cursor = databaseHelper.getAllTables();
